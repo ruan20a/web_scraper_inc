@@ -130,7 +130,7 @@ start_cache(session, main_url)
 last_page = session.all('div.pages-container .page-box span').last.text.to_i
 puts last_page
 
-cur_page = 10
+cur_page = 15
 wb_name = "Inc5000 " + "#{Time.now.strftime("%m%d%Y %H%M")}" + ".xls"
 workbook = WriteExcel.new(wb_name)
 worksheet  = workbook.add_worksheet
@@ -187,11 +187,12 @@ while cur_page <= last_page
         excel_index += 1
         close_last_browser(session)
         index += 1
-        sleep rand(5..8)
+        sleep rand(2..4)
       end
       companies += 1
     rescue
       worksheet.write_row(excel_index, 0, ["error"])
+      transfer_to_excel(header_row, company_rows)
       # retry
     end
   end
